@@ -1,9 +1,16 @@
+import bmwImage from "@/assets/bmw-3-series.jpg";
+import audiImage from "@/assets/audi-q7.jpg";
+import teslaImage from "@/assets/tesla-model-s.jpg";
+import porscheImage from "@/assets/porsche-911.jpg";
+import toyotaImage from "@/assets/toyota-camry.jpg";
+import mercedesImage from "@/assets/mercedes-gls.jpg";
+
 export const cars = [
   {
     id: "1",
     name: "BMW 3 Series",
     category: "Luxury Sedan",
-    image: "/placeholder.svg",
+    image: bmwImage,
     pricePerDay: 89,
     passengers: 5,
     transmission: "Automatic",
@@ -15,7 +22,7 @@ export const cars = [
     id: "2",
     name: "Audi Q7",
     category: "Premium SUV",
-    image: "/placeholder.svg",
+    image: audiImage,
     pricePerDay: 129,
     passengers: 7,
     transmission: "Automatic",
@@ -27,7 +34,7 @@ export const cars = [
     id: "3",
     name: "Tesla Model S",
     category: "Electric Luxury",
-    image: "/placeholder.svg",
+    image: teslaImage,
     pricePerDay: 149,
     passengers: 5,
     transmission: "Automatic",
@@ -39,7 +46,7 @@ export const cars = [
     id: "4",
     name: "Porsche 911",
     category: "Sports Car",
-    image: "/placeholder.svg",
+    image: porscheImage,
     pricePerDay: 299,
     passengers: 2,
     transmission: "Manual",
@@ -51,7 +58,7 @@ export const cars = [
     id: "5",
     name: "Toyota Camry",
     category: "Economy",
-    image: "/placeholder.svg",
+    image: toyotaImage,
     pricePerDay: 49,
     passengers: 5,
     transmission: "Automatic",
@@ -63,7 +70,7 @@ export const cars = [
     id: "6",
     name: "Mercedes GLS",
     category: "Luxury SUV",
-    image: "/placeholder.svg",
+    image: mercedesImage,
     pricePerDay: 179,
     passengers: 7,
     transmission: "Automatic",

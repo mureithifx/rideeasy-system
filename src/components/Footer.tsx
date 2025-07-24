@@ -81,7 +81,7 @@ const Footer = () => {
         <div className="py-6 border-t border-background/20">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-background/80 text-sm">
-              © 2024 RideEasy. All rights reserved.
+              © 2024 RideEasy.
             </p>
             <div className="flex space-x-6 text-sm">
               <a href="#" className="text-background/80 hover:text-accent transition-colors">Privacy</a>

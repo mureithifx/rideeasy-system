@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Car } from "lucide-react";
+import SignInDialog from "@/components/SignInDialog";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -36,7 +37,9 @@ const Navbar = () => {
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="outline">Sign In</Button>
+            <SignInDialog>
+              <Button variant="outline">Sign In</Button>
+            </SignInDialog>
             <Button>Book Now</Button>
           </div>
 
@@ -72,7 +75,9 @@ const Navbar = () => {
                 Contact
               </a>
               <div className="pt-4 border-t border-border">
-                <Button variant="outline" className="w-full mb-2">Sign In</Button>
+                <SignInDialog>
+                  <Button variant="outline" className="w-full mb-2">Sign In</Button>
+                </SignInDialog>
                 <Button className="w-full">Book Now</Button>
               </div>
             </div>
