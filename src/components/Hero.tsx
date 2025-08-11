@@ -34,6 +34,7 @@ const Hero = () => {
           <div className="flex flex-col sm:flex-row gap-4">
             <BookingDialog>
               <Button 
+                type="button"
                 size="lg" 
                 className="px-8 py-6 text-lg font-semibold bg-primary hover:bg-primary/90 transition-all duration-300 active:scale-95 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
               >
@@ -114,6 +115,7 @@ const Hero = () => {
 
                 <BookingDialog>
                   <Button 
+                    type="button"
                     className="w-full py-4 mt-6 text-base font-semibold bg-accent hover:bg-accent/90 transition-all duration-300 active:scale-[0.98] shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
                     size="lg"
                   >

@@ -67,6 +67,7 @@ const Navbar = () => {
             )}
             <BookingDialog>
               <Button 
+                type="button"
                 size="sm"
                 className="bg-primary hover:bg-primary/90 transition-all duration-200 active:scale-95 shadow-md hover:shadow-lg"
               >
@@ -127,6 +128,7 @@ const Navbar = () => {
                 )}
                 <BookingDialog>
                   <Button 
+                    type="button"
                     className="w-full h-12 text-base font-medium bg-primary hover:bg-primary/90 transition-all duration-200 active:scale-[0.98] shadow-md"
                   >
                     Book Now

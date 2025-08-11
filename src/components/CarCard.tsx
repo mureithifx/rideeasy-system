@@ -78,6 +78,7 @@ const CarCard = ({ car }: CarCardProps) => {
       <CardFooter className="p-4 pt-0">
         <BookingDialog carId={car.id} carName={car.name}>
           <Button 
+            type="button"
             className="w-full py-3 text-base font-semibold bg-primary hover:bg-primary/90 transition-all duration-300 active:scale-[0.98] shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
             size="lg"
           >
