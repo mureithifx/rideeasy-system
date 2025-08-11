@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Car } from "lucide-react";
-import SignInDialog from "@/components/SignInDialog";
 import BookingDialog from "@/components/BookingDialog";
+import { Link } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { user, signOut } = useAuth();
 
   return (
     <nav className="bg-background/95 backdrop-blur-sm border-b border-border sticky top-0 z-50">
@@ -34,19 +36,35 @@ const Navbar = () => {
             <a href="#contact" className="text-foreground hover:text-primary transition-colors">
               Contact
             </a>
+            <Link to="/auth" className="text-foreground hover:text-primary transition-colors md:hidden">
+              Account
+            </Link>
           </div>
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center space-x-3">
-            <SignInDialog>
-              <Button 
-                variant="outline" 
-                size="sm"
-                className="hover:bg-accent hover:text-accent-foreground transition-all duration-200 active:scale-95"
-              >
-                Sign In
-              </Button>
-            </SignInDialog>
+            {user ? (
+              <>
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={signOut}
+                  className="hover:bg-accent hover:text-accent-foreground transition-all duration-200 active:scale-95"
+                >
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <Link to="/auth">
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  className="hover:bg-accent hover:text-accent-foreground transition-all duration-200 active:scale-95"
+                >
+                  Sign In
+                </Button>
+              </Link>
+            )}
             <BookingDialog>
               <Button 
                 size="sm"
@@ -89,14 +107,24 @@ const Navbar = () => {
                 Contact
               </a>
               <div className="pt-4 border-t border-border space-y-3">
-                <SignInDialog>
+                {user ? (
                   <Button 
                     variant="outline" 
                     className="w-full h-12 text-base font-medium hover:bg-accent hover:text-accent-foreground transition-all duration-200 active:scale-[0.98]"
+                    onClick={() => { setIsOpen(false); signOut(); }}
                   >
-                    Sign In
+                    Logout
                   </Button>
-                </SignInDialog>
+                ) : (
+                  <Link to="/auth" onClick={() => setIsOpen(false)}>
+                    <Button 
+                      variant="outline" 
+                      className="w-full h-12 text-base font-medium hover:bg-accent hover:text-accent-foreground transition-all duration-200 active:scale-[0.98]"
+                    >
+                      Sign In
+                    </Button>
+                  </Link>
+                )}
                 <BookingDialog>
                   <Button 
                     className="w-full h-12 text-base font-medium bg-primary hover:bg-primary/90 transition-all duration-200 active:scale-[0.98] shadow-md"
