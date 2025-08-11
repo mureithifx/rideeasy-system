@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Car } from "lucide-react";
 import SignInDialog from "@/components/SignInDialog";
+import BookingDialog from "@/components/BookingDialog";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -46,12 +47,14 @@ const Navbar = () => {
                 Sign In
               </Button>
             </SignInDialog>
-            <Button 
-              size="sm"
-              className="bg-primary hover:bg-primary/90 transition-all duration-200 active:scale-95 shadow-md hover:shadow-lg"
-            >
-              Book Now
-            </Button>
+            <BookingDialog>
+              <Button 
+                size="sm"
+                className="bg-primary hover:bg-primary/90 transition-all duration-200 active:scale-95 shadow-md hover:shadow-lg"
+              >
+                Book Now
+              </Button>
+            </BookingDialog>
           </div>
 
           {/* Mobile menu button */}
@@ -94,11 +97,13 @@ const Navbar = () => {
                     Sign In
                   </Button>
                 </SignInDialog>
-                <Button 
-                  className="w-full h-12 text-base font-medium bg-primary hover:bg-primary/90 transition-all duration-200 active:scale-[0.98] shadow-md"
-                >
-                  Book Now
-                </Button>
+                <BookingDialog>
+                  <Button 
+                    className="w-full h-12 text-base font-medium bg-primary hover:bg-primary/90 transition-all duration-200 active:scale-[0.98] shadow-md"
+                  >
+                    Book Now
+                  </Button>
+                </BookingDialog>
               </div>
             </div>
           </div>

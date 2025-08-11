@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Users, Fuel, Settings, Star } from "lucide-react";
+import BookingDialog from "./BookingDialog";
 
 interface CarCardProps {
   car: {
@@ -75,12 +76,14 @@ const CarCard = ({ car }: CarCardProps) => {
       </CardContent>
 
       <CardFooter className="p-4 pt-0">
-        <Button 
-          className="w-full py-3 text-base font-semibold bg-primary hover:bg-primary/90 transition-all duration-300 active:scale-[0.98] shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
-          size="lg"
-        >
-          Book Now
-        </Button>
+        <BookingDialog carId={car.id} carName={car.name}>
+          <Button 
+            className="w-full py-3 text-base font-semibold bg-primary hover:bg-primary/90 transition-all duration-300 active:scale-[0.98] shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+            size="lg"
+          >
+            Book Now
+          </Button>
+        </BookingDialog>
       </CardFooter>
     </Card>
   );
