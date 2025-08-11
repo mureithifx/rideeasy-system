@@ -75,7 +75,12 @@ const CarCard = ({ car }: CarCardProps) => {
       </CardContent>
 
       <CardFooter className="p-4 pt-0">
-        <Button className="w-full">Book Now</Button>
+        <Button 
+          className="w-full py-3 text-base font-semibold bg-primary hover:bg-primary/90 transition-all duration-300 active:scale-[0.98] shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+          size="lg"
+        >
+          Book Now
+        </Button>
       </CardFooter>
     </Card>
   );

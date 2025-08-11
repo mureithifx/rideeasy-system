@@ -36,11 +36,22 @@ const Navbar = () => {
           </div>
 
           {/* Desktop CTA */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-3">
             <SignInDialog>
-              <Button variant="outline">Sign In</Button>
+              <Button 
+                variant="outline" 
+                size="sm"
+                className="hover:bg-accent hover:text-accent-foreground transition-all duration-200 active:scale-95"
+              >
+                Sign In
+              </Button>
             </SignInDialog>
-            <Button>Book Now</Button>
+            <Button 
+              size="sm"
+              className="bg-primary hover:bg-primary/90 transition-all duration-200 active:scale-95 shadow-md hover:shadow-lg"
+            >
+              Book Now
+            </Button>
           </div>
 
           {/* Mobile menu button */}
@@ -74,11 +85,20 @@ const Navbar = () => {
               <a href="#contact" className="block px-3 py-2 text-foreground hover:text-primary">
                 Contact
               </a>
-              <div className="pt-4 border-t border-border">
+              <div className="pt-4 border-t border-border space-y-3">
                 <SignInDialog>
-                  <Button variant="outline" className="w-full mb-2">Sign In</Button>
+                  <Button 
+                    variant="outline" 
+                    className="w-full h-12 text-base font-medium hover:bg-accent hover:text-accent-foreground transition-all duration-200 active:scale-[0.98]"
+                  >
+                    Sign In
+                  </Button>
                 </SignInDialog>
-                <Button className="w-full">Book Now</Button>
+                <Button 
+                  className="w-full h-12 text-base font-medium bg-primary hover:bg-primary/90 transition-all duration-200 active:scale-[0.98] shadow-md"
+                >
+                  Book Now
+                </Button>
               </div>
             </div>
           </div>

@@ -31,10 +31,17 @@ const Hero = () => {
             Perfect for business trips, family vacations, or special occasions.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
-            <Button size="lg" className="px-8 py-6 text-lg">
+            <Button 
+              size="lg" 
+              className="px-8 py-6 text-lg font-semibold bg-primary hover:bg-primary/90 transition-all duration-300 active:scale-95 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+            >
               Book Your Ride
             </Button>
-            <Button variant="outline" size="lg" className="px-8 py-6 text-lg">
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="px-8 py-6 text-lg font-semibold border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 active:scale-95 hover:shadow-lg transform hover:-translate-y-0.5"
+            >
               View Fleet
             </Button>
           </div>
@@ -101,7 +108,10 @@ const Hero = () => {
                   </div>
                 </div>
 
-                <Button className="w-full py-3 mt-6 bg-accent-gradient hover:opacity-90 transition-opacity">
+                <Button 
+                  className="w-full py-4 mt-6 text-base font-semibold bg-accent hover:bg-accent/90 transition-all duration-300 active:scale-[0.98] shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+                  size="lg"
+                >
                   Search Available Cars
                 </Button>
               </div>
