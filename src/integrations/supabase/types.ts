@@ -14,7 +14,113 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      bookings: {
+        Row: {
+          car_id: string
+          created_at: string
+          customer_email: string
+          customer_name: string
+          customer_phone: string
+          id: string
+          pickup_date: string
+          pickup_location: string
+          return_date: string
+          return_location: string
+          status: string
+          total_days: number
+          total_price: number
+          updated_at: string
+        }
+        Insert: {
+          car_id: string
+          created_at?: string
+          customer_email: string
+          customer_name: string
+          customer_phone: string
+          id?: string
+          pickup_date: string
+          pickup_location: string
+          return_date: string
+          return_location: string
+          status?: string
+          total_days: number
+          total_price: number
+          updated_at?: string
+        }
+        Update: {
+          car_id?: string
+          created_at?: string
+          customer_email?: string
+          customer_name?: string
+          customer_phone?: string
+          id?: string
+          pickup_date?: string
+          pickup_location?: string
+          return_date?: string
+          return_location?: string
+          status?: string
+          total_days?: number
+          total_price?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bookings_car_id_fkey"
+            columns: ["car_id"]
+            isOneToOne: false
+            referencedRelation: "cars"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cars: {
+        Row: {
+          available: boolean
+          category: string
+          created_at: string
+          features: string[]
+          fuel_type: string
+          id: string
+          image: string
+          name: string
+          passengers: number
+          price_per_day: number
+          rating: number
+          transmission: string
+          updated_at: string
+        }
+        Insert: {
+          available?: boolean
+          category: string
+          created_at?: string
+          features?: string[]
+          fuel_type: string
+          id?: string
+          image: string
+          name: string
+          passengers: number
+          price_per_day: number
+          rating?: number
+          transmission: string
+          updated_at?: string
+        }
+        Update: {
+          available?: boolean
+          category?: string
+          created_at?: string
+          features?: string[]
+          fuel_type?: string
+          id?: string
+          image?: string
+          name?: string
+          passengers?: number
+          price_per_day?: number
+          rating?: number
+          transmission?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
