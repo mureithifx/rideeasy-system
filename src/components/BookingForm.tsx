@@ -3,9 +3,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Calendar, MapPin, Users, Clock } from "lucide-react";
+import { Calendar, MapPin, Users, Clock, Loader2 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useToast } from "@/components/ui/use-toast";
+import { useBookings } from "@/hooks/useBookings";
 
 interface BookingFormProps {
   carId?: string;
@@ -14,7 +14,7 @@ interface BookingFormProps {
 }
 
 const BookingForm = ({ carId, carName, onClose }: BookingFormProps) => {
-  const { toast } = useToast();
+  const { createBooking, loading } = useBookings();
   const [formData, setFormData] = useState({
     pickupLocation: "",
     pickupDate: "",
@@ -31,41 +31,50 @@ const BookingForm = ({ carId, carName, onClose }: BookingFormProps) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // Basic validation
-    if (!formData.pickupLocation || !formData.pickupDate || !formData.fullName || !formData.email) {
-      toast({
-        title: "Missing Information",
-        description: "Please fill in all required fields.",
-        variant: "destructive"
-      });
+    if (!formData.pickupLocation || !formData.pickupDate || !formData.fullName || !formData.email || !carId) {
       return;
     }
 
-    // Simulate booking submission
-    console.log("Booking submitted:", { ...formData, carId, carName });
+    // Calculate total days and price (simplified calculation)
+    const pickupDate = new Date(formData.pickupDate);
+    const returnDate = formData.dropoffDate ? new Date(formData.dropoffDate) : new Date(pickupDate.getTime() + 24 * 60 * 60 * 1000);
+    const totalDays = Math.max(1, Math.ceil((returnDate.getTime() - pickupDate.getTime()) / (1000 * 60 * 60 * 24)));
     
-    toast({
-      title: "Booking Confirmed!",
-      description: `Your booking for ${carName || "selected car"} has been submitted. We'll contact you shortly.`,
-    });
+    const bookingData = {
+      car_id: carId,
+      customer_name: formData.fullName,
+      customer_email: formData.email,
+      customer_phone: formData.phone || "",
+      pickup_date: formData.pickupDate,
+      return_date: formData.dropoffDate || formData.pickupDate,
+      pickup_location: formData.pickupLocation,
+      return_location: formData.pickupLocation, // Using same location for simplicity
+      total_days: totalDays,
+      total_price: totalDays * 100 // Simplified pricing
+    };
 
-    // Reset form
-    setFormData({
-      pickupLocation: "",
-      pickupDate: "",
-      pickupTime: "",
-      dropoffDate: "",
-      dropoffTime: "",
-      passengers: "1",
-      fullName: "",
-      email: "",
-      phone: ""
-    });
+    const { error } = await createBooking(bookingData);
+    
+    if (!error) {
+      // Reset form
+      setFormData({
+        pickupLocation: "",
+        pickupDate: "",
+        pickupTime: "",
+        dropoffDate: "",
+        dropoffTime: "",
+        passengers: "1",
+        fullName: "",
+        email: "",
+        phone: ""
+      });
 
-    if (onClose) onClose();
+      if (onClose) onClose();
+    }
   };
 
   return (
@@ -233,9 +242,17 @@ const BookingForm = ({ carId, carName, onClose }: BookingFormProps) => {
             )}
             <Button
               type="submit"
+              disabled={loading}
               className="flex-1 bg-primary hover:bg-primary/90 transition-all duration-200"
             >
-              Confirm Booking
+              {loading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Processing...
+                </>
+              ) : (
+                "Confirm Booking"
+              )}
             </Button>
           </div>
         </form>

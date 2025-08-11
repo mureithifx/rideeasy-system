@@ -10,10 +10,10 @@ interface CarCardProps {
     name: string;
     category: string;
     image: string;
-    pricePerDay: number;
+    price_per_day: number;
     passengers: number;
     transmission: string;
-    fuelType: string;
+    fuel_type: string;
     rating: number;
     features: string[];
   };
@@ -53,7 +53,7 @@ const CarCard = ({ car }: CarCardProps) => {
           </div>
           <div className="flex items-center space-x-1">
             <Fuel className="h-4 w-4" />
-            <span>{car.fuelType}</span>
+            <span>{car.fuel_type}</span>
           </div>
         </div>
 
@@ -69,7 +69,7 @@ const CarCard = ({ car }: CarCardProps) => {
         {/* Price */}
         <div className="flex items-center justify-between">
           <div>
-            <span className="text-2xl font-bold text-primary">${car.pricePerDay}</span>
+            <span className="text-2xl font-bold text-primary">${car.price_per_day}</span>
             <span className="text-sm text-muted-foreground">/day</span>
           </div>
         </div>

@@ -2,11 +2,12 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Search, Filter, SlidersHorizontal } from "lucide-react";
+import { Search, Filter, SlidersHorizontal, Loader2 } from "lucide-react";
 import CarCard from "./CarCard";
-import { cars } from "@/data/cars";
+import { useCars } from "@/hooks/useCars";
 
 const CarCatalog = () => {
+  const { cars, loading, error } = useCars();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [priceRange, setPriceRange] = useState("All");
@@ -21,15 +22,26 @@ const CarCatalog = () => {
     
     let matchesPrice = true;
     if (priceRange === "Under $75") {
-      matchesPrice = car.pricePerDay < 75;
+      matchesPrice = car.price_per_day < 75;
     } else if (priceRange === "$75-$150") {
-      matchesPrice = car.pricePerDay >= 75 && car.pricePerDay <= 150;
+      matchesPrice = car.price_per_day >= 75 && car.price_per_day <= 150;
     } else if (priceRange === "Over $150") {
-      matchesPrice = car.pricePerDay > 150;
+      matchesPrice = car.price_per_day > 150;
     }
 
     return matchesSearch && matchesCategory && matchesPrice;
   });
+
+  if (error) {
+    return (
+      <section id="cars" className="py-16 bg-muted/30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Error Loading Cars</h2>
+          <p className="text-lg text-destructive">{error}</p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="cars" className="py-16 bg-muted/30">
@@ -112,11 +124,18 @@ const CarCatalog = () => {
         </div>
 
         {/* Car Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredCars.map((car) => (
-            <CarCard key={car.id} car={car} />
-          ))}
-        </div>
+        {loading ? (
+          <div className="flex justify-center items-center py-12">
+            <Loader2 className="h-8 w-8 animate-spin" />
+            <span className="ml-2 text-lg">Loading vehicles...</span>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredCars.map((car) => (
+              <CarCard key={car.id} car={car} />
+            ))}
+          </div>
+        )}
 
         {/* No Results */}
         {filteredCars.length === 0 && (
