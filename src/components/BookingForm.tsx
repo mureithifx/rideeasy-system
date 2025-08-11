@@ -6,6 +6,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Calendar, MapPin, Users, Clock, Loader2 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useBookings } from "@/hooks/useBookings";
+import { useCars } from "@/hooks/useCars";
+import { useToast } from "@/components/ui/use-toast";
 
 interface BookingFormProps {
   carId?: string;
@@ -15,6 +17,9 @@ interface BookingFormProps {
 
 const BookingForm = ({ carId, carName, onClose }: BookingFormProps) => {
   const { createBooking, loading } = useBookings();
+  const { cars, loading: carsLoading } = useCars();
+  const { toast } = useToast();
+  const [selectedCarId, setSelectedCarId] = useState<string | undefined>(carId);
   const [formData, setFormData] = useState({
     pickupLocation: "",
     pickupDate: "",
@@ -35,17 +40,25 @@ const BookingForm = ({ carId, carName, onClose }: BookingFormProps) => {
     e.preventDefault();
     
     // Basic validation
-    if (!formData.pickupLocation || !formData.pickupDate || !formData.fullName || !formData.email || !carId) {
+    const activeCarIdCheck = carId ?? selectedCarId;
+    if (!formData.pickupLocation || !formData.pickupDate || !formData.fullName || !formData.email || !activeCarIdCheck) {
+      toast({
+        title: "Missing information",
+        description: "Please select a car and complete all required fields.",
+        variant: "destructive",
+      });
       return;
     }
 
-    // Calculate total days and price (simplified calculation)
+    // Calculate total days and price
     const pickupDate = new Date(formData.pickupDate);
     const returnDate = formData.dropoffDate ? new Date(formData.dropoffDate) : new Date(pickupDate.getTime() + 24 * 60 * 60 * 1000);
     const totalDays = Math.max(1, Math.ceil((returnDate.getTime() - pickupDate.getTime()) / (1000 * 60 * 60 * 24)));
+    const activeCarId = (carId ?? selectedCarId) as string;
+    const pricePerDay = cars.find((c) => c.id === activeCarId)?.price_per_day ?? 100;
     
     const bookingData = {
-      car_id: carId,
+      car_id: activeCarId,
       customer_name: formData.fullName,
       customer_email: formData.email,
       customer_phone: formData.phone || "",
@@ -54,7 +67,7 @@ const BookingForm = ({ carId, carName, onClose }: BookingFormProps) => {
       pickup_location: formData.pickupLocation,
       return_location: formData.pickupLocation, // Using same location for simplicity
       total_days: totalDays,
-      total_price: totalDays * 100 // Simplified pricing
+      total_price: totalDays * pricePerDay
     };
 
     const { error } = await createBooking(bookingData);
@@ -86,6 +99,23 @@ const BookingForm = ({ carId, carName, onClose }: BookingFormProps) => {
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6">
+          {!carId && (
+            <div className="space-y-2">
+              <Label htmlFor="car">Select Car *</Label>
+              <Select value={selectedCarId} onValueChange={setSelectedCarId}>
+                <SelectTrigger>
+                  <SelectValue placeholder={carsLoading ? "Loading cars..." : "Choose a car"} />
+                </SelectTrigger>
+                <SelectContent>
+                  {cars.map((c) => (
+                    <SelectItem key={c.id} value={c.id}>
+                      {c.name} - ${c.price_per_day}/day
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          )}
           {/* Pickup Details */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
