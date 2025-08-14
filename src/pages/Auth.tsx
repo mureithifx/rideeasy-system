@@ -68,7 +68,7 @@ const Auth = () => {
       <section className="max-w-md mx-auto px-4 py-10">
         <Card>
           <CardHeader>
-            <CardTitle as-child>
+            <CardTitle>
               <h1 className="text-2xl">Account Access</h1>
             </CardTitle>
             <CardDescription>Sign in or create an account to continue</CardDescription>
