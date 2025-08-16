@@ -23,7 +23,7 @@ export const useBookings = () => {
       
       const { data, error } = await supabase
         .from('bookings')
-        .insert([bookingData])
+        .insert(bookingData as any)
         .select()
         .single();
 

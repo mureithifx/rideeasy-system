@@ -125,7 +125,6 @@ const BookingForm = ({ carId, carName, onClose }: BookingFormProps) => {
                 />
               </div>
             </div>
-
             <div className="space-y-2">
               <Label htmlFor="pickupTime">Pickup Time</Label>
               <div className="relative">

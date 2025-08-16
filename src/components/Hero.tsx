@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Calendar, MapPin, Users } from "lucide-react";
+import { Calendar } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import heroImage from "@/assets/hero-car.jpg";
 import BookingDialog from "@/components/BookingDialog";
@@ -57,23 +57,7 @@ const Hero = () => {
           <Card className="bg-card-gradient shadow-large backdrop-blur-sm border-border/50">
             <CardContent className="p-6">
               <h3 className="text-2xl font-semibold mb-6 text-center">Quick Booking</h3>
-              
               <div className="space-y-4">
-                {/* Pick-up Location */}
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-foreground">Pick-up Location</label>
-                  <div className="relative">
-                    <MapPin className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                    <select className="w-full pl-10 pr-4 py-3 bg-background border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
-                      <option>Select pick-up location</option>
-                      <option>Airport Terminal</option>
-                      <option>Downtown Office</option>
-                      <option>Hotel District</option>
-                      <option>City Center</option>
-                    </select>
-                  </div>
-                </div>
-
                 {/* Date & Time */}
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
@@ -98,20 +82,6 @@ const Hero = () => {
                   </div>
                 </div>
 
-                {/* Passengers */}
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-foreground">Passengers</label>
-                  <div className="relative">
-                    <Users className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                    <select className="w-full pl-10 pr-4 py-3 bg-background border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
-                      <option>1 Passenger</option>
-                      <option>2 Passengers</option>
-                      <option>3 Passengers</option>
-                      <option>4 Passengers</option>
-                      <option>5+ Passengers</option>
-                    </select>
-                  </div>
-                </div>
 
                 <BookingDialog>
                   <Button 
