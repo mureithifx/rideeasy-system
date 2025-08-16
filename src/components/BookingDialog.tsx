@@ -3,6 +3,7 @@ import {
   Dialog,
   DialogContent,
   DialogTrigger,
+  DialogTitle,
 } from "@/components/ui/dialog";
 import BookingForm from "./BookingForm";
 
@@ -21,6 +22,9 @@ const BookingDialog = ({ children, carId, carName }: BookingDialogProps) => {
         {children}
       </DialogTrigger>
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+        <DialogTitle className="sr-only">
+          {carName ? `Book ${carName}` : "Book a Car"}
+        </DialogTitle>
         <BookingForm 
           carId={carId} 
           carName={carName} 
