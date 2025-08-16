@@ -9,8 +9,6 @@ export interface BookingData {
   customer_phone: string;
   pickup_date: string;
   return_date: string;
-  pickup_location: string;
-  return_location: string;
   total_days: number;
   total_price: number;
 }

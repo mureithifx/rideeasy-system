@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Calendar, MapPin, Users, Clock, Loader2 } from "lucide-react";
+import { Calendar, Clock, Loader2 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useBookings } from "@/hooks/useBookings";
 import { useCars } from "@/hooks/useCars";
@@ -21,12 +21,9 @@ const BookingForm = ({ carId, carName, onClose }: BookingFormProps) => {
   const { toast } = useToast();
   const [selectedCarId, setSelectedCarId] = useState<string | undefined>(carId);
   const [formData, setFormData] = useState({
-    pickupLocation: "",
     pickupDate: "",
     pickupTime: "",
     dropoffDate: "",
-    dropoffTime: "",
-    passengers: "1",
     fullName: "",
     email: "",
     phone: ""
@@ -41,7 +38,7 @@ const BookingForm = ({ carId, carName, onClose }: BookingFormProps) => {
     
     // Basic validation
     const activeCarIdCheck = carId ?? selectedCarId;
-    if (!formData.pickupLocation || !formData.pickupDate || !formData.fullName || !formData.email || !activeCarIdCheck) {
+    if (!formData.pickupDate || !formData.fullName || !formData.email || !activeCarIdCheck) {
       toast({
         title: "Missing information",
         description: "Please select a car and complete all required fields.",
@@ -64,8 +61,6 @@ const BookingForm = ({ carId, carName, onClose }: BookingFormProps) => {
       customer_phone: formData.phone || "",
       pickup_date: formData.pickupDate,
       return_date: formData.dropoffDate || formData.pickupDate,
-      pickup_location: formData.pickupLocation,
-      return_location: formData.pickupLocation, // Using same location for simplicity
       total_days: totalDays,
       total_price: totalDays * pricePerDay
     };
@@ -75,12 +70,9 @@ const BookingForm = ({ carId, carName, onClose }: BookingFormProps) => {
     if (!error) {
       // Reset form
       setFormData({
-        pickupLocation: "",
         pickupDate: "",
         pickupTime: "",
         dropoffDate: "",
-        dropoffTime: "",
-        passengers: "1",
         fullName: "",
         email: "",
         phone: ""
@@ -116,46 +108,7 @@ const BookingForm = ({ carId, carName, onClose }: BookingFormProps) => {
               </Select>
             </div>
           )}
-          {/* Pickup Details */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="pickupLocation">Pickup Location *</Label>
-              <div className="relative">
-                <MapPin className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                <Select value={formData.pickupLocation} onValueChange={(value) => handleInputChange("pickupLocation", value)}>
-                  <SelectTrigger className="pl-10">
-                    <SelectValue placeholder="Select pickup location" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="airport">Airport Terminal</SelectItem>
-                    <SelectItem value="downtown">Downtown Office</SelectItem>
-                    <SelectItem value="hotel">Hotel District</SelectItem>
-                    <SelectItem value="city-center">City Center</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="passengers">Passengers</Label>
-              <div className="relative">
-                <Users className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                <Select value={formData.passengers} onValueChange={(value) => handleInputChange("passengers", value)}>
-                  <SelectTrigger className="pl-10">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="1">1 Passenger</SelectItem>
-                    <SelectItem value="2">2 Passengers</SelectItem>
-                    <SelectItem value="3">3 Passengers</SelectItem>
-                    <SelectItem value="4">4 Passengers</SelectItem>
-                    <SelectItem value="5+">5+ Passengers</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-          </div>
-
+          
           {/* Date and Time */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
@@ -204,19 +157,6 @@ const BookingForm = ({ carId, carName, onClose }: BookingFormProps) => {
               </div>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="dropoffTime">Drop-off Time</Label>
-              <div className="relative">
-                <Clock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                <Input
-                  type="time"
-                  id="dropoffTime"
-                  value={formData.dropoffTime}
-                  onChange={(e) => handleInputChange("dropoffTime", e.target.value)}
-                  className="pl-10"
-                />
-              </div>
-            </div>
           </div>
 
           {/* Contact Information */}
