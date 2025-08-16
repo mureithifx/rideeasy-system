@@ -98,34 +98,6 @@ const BookingForm = ({ carId, carName, onClose }: BookingFormProps) => {
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6">
-          {!carId && (
-            <div className="space-y-2">
-              <Label htmlFor="car">Select Car *</Label>
-              {carsLoading ? (
-                <div className="flex items-center justify-center p-4 text-muted-foreground">
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Loading available cars...
-                </div>
-              ) : cars.length === 0 ? (
-                <div className="p-4 text-center text-muted-foreground bg-muted rounded-md">
-                  No cars available for booking at the moment.
-                </div>
-              ) : (
-                <Select value={selectedCarId} onValueChange={setSelectedCarId}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a vehicle" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {cars.map((c) => (
-                      <SelectItem key={c.id} value={c.id}>
-                        {c.name} - ${c.price_per_day}/day
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              )}
-            </div>
-          )}
           
           {/* Date and Time */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

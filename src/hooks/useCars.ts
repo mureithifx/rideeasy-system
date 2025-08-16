@@ -10,6 +10,7 @@ import mercedesGLS from '@/assets/mercedes-gls.jpg';
 import porsche911 from '@/assets/porsche-911.jpg';
 import teslaModelS from '@/assets/tesla-model-s.jpg';
 import toyotaCamry from '@/assets/toyota-camry.jpg';
+import { cars as staticCars } from '@/data/cars';
 
 // Image mapping
 const imageMap: { [key: string]: string } = {
@@ -68,10 +69,29 @@ export const useCars = () => {
         if (err2) throw err2;
         
         // Map database image paths to imported images
-        const carsWithImages = (dataNoFilter || []).map(car => ({
+        const carsWithImages = (dataNoFilter || []).map((car: any) => ({
           ...car,
-          image: imageMap[car.image] || car.image
+          image: imageMap[car.image] || car.image,
         }));
+
+        if (!carsWithImages.length) {
+          console.warn('No cars in DB (no-filter), using fallback sample data');
+          const fallback = staticCars.map((c: any) => ({
+            id: crypto.randomUUID(),
+            name: c.name,
+            category: c.category,
+            image: c.image,
+            price_per_day: c.pricePerDay,
+            passengers: c.passengers,
+            transmission: c.transmission,
+            fuel_type: c.fuelType,
+            rating: c.rating,
+            features: c.features,
+            available: true,
+          }));
+          setCars(fallback);
+          return;
+        }
         
         setCars(carsWithImages);
         return;
@@ -80,12 +100,30 @@ export const useCars = () => {
       if (fetchError) throw fetchError;
 
       // Map database image paths to imported images
-      const carsWithImages = (data || []).map(car => ({
+      const carsWithImages = (data || []).map((car: any) => ({
         ...car,
-        image: imageMap[car.image] || car.image
+        image: imageMap[car.image] || car.image,
       }));
 
-      setCars(carsWithImages);
+      if (!carsWithImages.length) {
+        console.warn('No cars in DB, using fallback sample data');
+        const fallback = staticCars.map((c: any) => ({
+          id: crypto.randomUUID(),
+          name: c.name,
+          category: c.category,
+          image: c.image,
+          price_per_day: c.pricePerDay,
+          passengers: c.passengers,
+          transmission: c.transmission,
+          fuel_type: c.fuelType,
+          rating: c.rating,
+          features: c.features,
+          available: true,
+        }));
+        setCars(fallback);
+      } else {
+        setCars(carsWithImages);
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred while fetching cars');
       console.error('Error fetching cars:', err);
