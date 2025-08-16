@@ -1,6 +1,28 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 
+// Import car images
+import audiQ7 from '@/assets/audi-q7.jpg';
+import bmwSeries from '@/assets/bmw-3-series.jpg';
+import carFleet from '@/assets/car-fleet.jpg';
+import heroCar from '@/assets/hero-car.jpg';
+import mercedesGLS from '@/assets/mercedes-gls.jpg';
+import porsche911 from '@/assets/porsche-911.jpg';
+import teslaModelS from '@/assets/tesla-model-s.jpg';
+import toyotaCamry from '@/assets/toyota-camry.jpg';
+
+// Image mapping
+const imageMap: { [key: string]: string } = {
+  '/src/assets/audi-q7.jpg': audiQ7,
+  '/src/assets/bmw-3-series.jpg': bmwSeries,
+  '/src/assets/car-fleet.jpg': carFleet,
+  '/src/assets/hero-car.jpg': heroCar,
+  '/src/assets/mercedes-gls.jpg': mercedesGLS,
+  '/src/assets/porsche-911.jpg': porsche911,
+  '/src/assets/tesla-model-s.jpg': teslaModelS,
+  '/src/assets/toyota-camry.jpg': toyotaCamry,
+};
+
 export interface Car {
   id: string;
   name: string;
@@ -44,13 +66,26 @@ export const useCars = () => {
           .select('*')
           .order('name');
         if (err2) throw err2;
-        setCars(dataNoFilter || []);
+        
+        // Map database image paths to imported images
+        const carsWithImages = (dataNoFilter || []).map(car => ({
+          ...car,
+          image: imageMap[car.image] || car.image
+        }));
+        
+        setCars(carsWithImages);
         return;
       }
 
       if (fetchError) throw fetchError;
 
-      setCars(data || []);
+      // Map database image paths to imported images
+      const carsWithImages = (data || []).map(car => ({
+        ...car,
+        image: imageMap[car.image] || car.image
+      }));
+
+      setCars(carsWithImages);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred while fetching cars');
       console.error('Error fetching cars:', err);
