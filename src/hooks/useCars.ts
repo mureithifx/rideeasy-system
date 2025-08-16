@@ -29,11 +29,15 @@ export const useCars = () => {
       setLoading(true);
       setError(null);
       
+      console.log('Attempting to fetch cars...');
+      
       const { data, error: fetchError } = await supabase
         .from('cars')
         .select('*')
         .eq('available', true)
         .order('name');
+
+      console.log('Query response:', { data, error: fetchError });
 
       if (fetchError) {
         throw fetchError;
