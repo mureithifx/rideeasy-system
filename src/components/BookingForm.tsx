@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Calendar, Clock, Loader2 } from "lucide-react";
+import { Calendar, Loader2 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useBookings } from "@/hooks/useBookings";
 import { useCars } from "@/hooks/useCars";
@@ -22,7 +22,6 @@ const BookingForm = ({ carId, carName, onClose }: BookingFormProps) => {
   const [selectedCarId, setSelectedCarId] = useState<string | undefined>(carId);
   const [formData, setFormData] = useState({
     pickupDate: "",
-    pickupTime: "",
     dropoffDate: "",
     fullName: "",
     email: "",
@@ -71,7 +70,6 @@ const BookingForm = ({ carId, carName, onClose }: BookingFormProps) => {
       // Reset form
       setFormData({
         pickupDate: "",
-        pickupTime: "",
         dropoffDate: "",
         fullName: "",
         email: "",
@@ -122,19 +120,6 @@ const BookingForm = ({ carId, carName, onClose }: BookingFormProps) => {
                   onChange={(e) => handleInputChange("pickupDate", e.target.value)}
                   className="pl-10"
                   min={new Date().toISOString().split('T')[0]}
-                />
-              </div>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="pickupTime">Pickup Time</Label>
-              <div className="relative">
-                <Clock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                <Input
-                  type="time"
-                  id="pickupTime"
-                  value={formData.pickupTime}
-                  onChange={(e) => handleInputChange("pickupTime", e.target.value)}
-                  className="pl-10"
                 />
               </div>
             </div>
