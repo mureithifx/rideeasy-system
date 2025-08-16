@@ -28,20 +28,27 @@ export const useCars = () => {
     try {
       setLoading(true);
       setError(null);
-      
+
       console.log('Attempting to fetch cars...');
-      
-      const { data, error: fetchError } = await supabase
+
+      let { data, error: fetchError } = await supabase
         .from('cars')
         .select('*')
         .eq('available', true)
         .order('name');
 
-      console.log('Query response:', { data, error: fetchError });
-
-      if (fetchError) {
-        throw fetchError;
+      if (fetchError && (fetchError as any).code === '42703') {
+        console.warn('Column "available" missing in local DB, refetching without filter');
+        const { data: dataNoFilter, error: err2 } = await supabase
+          .from('cars')
+          .select('*')
+          .order('name');
+        if (err2) throw err2;
+        setCars(dataNoFilter || []);
+        return;
       }
+
+      if (fetchError) throw fetchError;
 
       setCars(data || []);
     } catch (err) {
